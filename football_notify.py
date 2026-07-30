@@ -9,13 +9,14 @@ import datetime
 import time
 import sys
 import unicodedata
+import os
 import urllib3
 from typing import Dict, List, Optional, Tuple
 
 urllib3.disable_warnings()
 
 # ==================== 配置区域 ====================
-PUSHPLUS_TOKEN = "2f1d3808db024a8e828afb6e003dc64b"
+PUSHPLUS_TOKEN = os.environ.get("PUSHPLUS_TOKEN", "2f1d3808db024a8e828afb6e003dc64b")
 
 FAVORITE_TEAMS = [
     "Arsenal",
