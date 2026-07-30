@@ -1,0 +1,27 @@
+name: Daily Football Schedule
+
+on:
+  schedule:
+    # 北京时间 9:00 = UTC 1:00 (冬) / UTC 0:00 (夏令时)
+    # 使用 0:00 UTC 覆盖夏令时和冬令时，早上 8-9 点之间
+    - cron: '0 1 * * *'
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: pip install requests --break-system-packages
+        
+      - name: Run football notification
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: python football_notify.py
